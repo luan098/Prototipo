@@ -16,8 +16,8 @@ export class UsersService {
     return 'This action try log in user in application';
   }
 
-  create(createUserDto: CreateUserDto) {
-    return this.usersRepository.create(createUserDto);
+  insert(createUserDto: CreateUserDto) {
+    return this.usersRepository.insert(createUserDto);
   }
 
   findAll(): Promise<User[]> {
