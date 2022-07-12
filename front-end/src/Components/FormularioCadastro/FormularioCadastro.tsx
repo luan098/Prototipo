@@ -80,12 +80,7 @@ const FormularioCadastro: FC<{ aoEnviar: any }> = ({ aoEnviar }) => {
         margin="normal"
         fullWidth
       />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        onClick={() => aoEnviar(userData)}
-      >
+      <Button type="submit" variant="contained" color="primary">
         Gravar
       </Button>
     </form>
