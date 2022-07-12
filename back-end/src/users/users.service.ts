@@ -3,7 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { InsertResult, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UsersService {
@@ -16,10 +17,9 @@ export class UsersService {
     return 'This action try log in user in application';
   }
 
-  async insert(createUserDto: CreateUserDto): Promise<string> {
-    // return await this.usersRepository.insert(createUserDto);
-    //TODO: VER PORQUE O INSERT NÃO ESTA SENDO FEITO.
-    return 'in progress';
+  async insert(createUserDto: CreateUserDto): Promise<User> {
+    const entity = plainToInstance(User, createUserDto);
+    return this.usersRepository.save(entity);
   }
 
   findAll(): Promise<User[]> {

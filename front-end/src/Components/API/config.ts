@@ -6,9 +6,10 @@ interface Api {
   body: {};
 }
 
-const url = "http://127.0.0.1:3001/";
+const url = "//127.0.0.1:3001/";
 const axiosInstance = axios.create({
-  baseURL: `${url}`,
+  baseURL: url,
+  headers: { "Access-Control-Allow-Origin": "*" },
 });
 
 const api: Api = {

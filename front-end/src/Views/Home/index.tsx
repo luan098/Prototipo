@@ -5,11 +5,10 @@ import UserService from "src/Services/UserService";
 import "./index.css";
 
 const Home = () => {
-  // const [users, setUsers] = useState([] as Array<any>);
+  const [users, setUsers] = useState([] as Array<any>);
 
   const buscarUsuarios = async () => {
-    const users = await UserService.listUser();
-    console.log(users);
+    setUsers(await UserService.listUser());
   };
 
   useEffect(() => {
