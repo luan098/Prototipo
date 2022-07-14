@@ -1,16 +1,38 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PreLoader from "../Components/PreLoader";
+import Main from "src/modules/main/Main";
+import PreLoader from "../Components/pre-loader";
 
-const Home = lazy(() => import("src/Views/Home"));
+const Login = lazy(() => import("src/Views/Login"));
+const Register = lazy(() => import("src/Views/Register"));
+const ForgotPassword = lazy(() => import("src/Views/ForgotPassword"));
+const RecoverPassword = lazy(() => import("src/Views/RecoverPassword"));
 const Error404 = lazy(() => import("src/Views/Error404"));
+const Home = lazy(() => import("src/Views/Home"));
+const Users = lazy(() => import("src/Views/Users/"));
+const UsersCreate = lazy(() => import("src/Views/Users/create"));
+const UsersEdit = lazy(() => import("src/Views/Users/edit"));
+const Profile = lazy(() => import("src/Views/Profile"));
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<PreLoader />}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/recover-password" element={<RecoverPassword />} />
+          {/* <Route path="/" element={<PrivateRoute />}> */}
+          <Route path="/" element={<Main />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/create" element={<UsersCreate />} />
+            <Route path="/users/edit/:id" element={<UsersEdit />} />
+          </Route>
+          {/* </Route> */}
           <Route path="*" element={<Error404 />} />
         </Routes>
       </Suspense>

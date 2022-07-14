@@ -1,4 +1,4 @@
-import api from "src/Components/API/config";
+import api from "src/API/config";
 
 class UserService {
   body: { [key: string]: string | number };
@@ -25,9 +25,29 @@ class UserService {
     }
   }
 
+  async login() {
+    try {
+      const { data } = await api.axios.get("users", this.body);
+
+      return data;
+    } catch (error) {
+      return null;
+    }
+  }
+
   async listUser() {
     try {
       const { data } = await api.axios.get("users", this.body);
+
+      return data;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async delete(id: string) {
+    try {
+      const { data } = await api.axios.delete(`users/${id}`, this.body);
 
       return data;
     } catch (error) {

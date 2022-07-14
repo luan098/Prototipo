@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -6,17 +6,15 @@ export class User {
   id: number;
 
   @Column()
-  firstName: string;
+  name: string;
 
-  @Column()
-  lastName: string;
-
-  @Column()
+  @Index()
+  @Column({ length: 100, unique: true })
   email: string;
 
-  @Column()
+  @Column({ length: 45 })
   password: string;
 
-  @Column({ default: true })
+  @Column({ nullable: true, default: true })
   isActive: boolean;
 }

@@ -13,10 +13,6 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  login() {
-    return 'This action try log in user in application';
-  }
-
   async insert(createUserDto: CreateUserDto): Promise<User> {
     const entity = plainToInstance(User, createUserDto);
     return this.usersRepository.save(entity);
@@ -26,7 +22,11 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  findOne(id: number): Promise<User> {
+  findOneByEmail(email: string): Promise<User | undefined> {
+    return this.usersRepository.findOneBy({ email });
+  }
+
+  findOne(id: number): Promise<User | undefined> {
     return this.usersRepository.findOneBy({ id });
   }
 
