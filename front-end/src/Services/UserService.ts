@@ -25,16 +25,6 @@ class UserService {
     }
   }
 
-  async login() {
-    try {
-      const { data } = await api.axios.get("users", this.body);
-
-      return data;
-    } catch (error) {
-      return null;
-    }
-  }
-
   async listUser() {
     try {
       const { data } = await api.axios.get("users", this.body);

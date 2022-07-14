@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import api from "src/API/config";
 
 class AuthService {
@@ -8,28 +9,14 @@ class AuthService {
   }
 
   async loginByAuth(email: string, password: string) {
-    try {
-      const { data } = await api.axios.post("auth/login", {
-        email,
-        password,
-        ...this.body,
-      });
+    const { data } = await api.axios.post("auth/login", {
+      username: email,
+      password,
+      ...this.body,
+    });
 
-      return data;
-    } catch (error) {
-      return null;
-    }
+    return data?.access_token || "";
   }
 }
-
-// import { removeWindowClass } from "src/Utils/helpers";
-
-// export const loginByAuth = async (email: string, password: string) => {
-//   const token = "blatoken";
-//   localStorage.setItem("token", token);
-//   removeWindowClass("login-page");
-//   removeWindowClass("hold-transition");
-//   return token;
-// };
 
 export default new AuthService();

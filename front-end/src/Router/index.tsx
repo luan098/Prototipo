@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "src/modules/main/Main";
 import PreLoader from "../Components/pre-loader";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 const Login = lazy(() => import("src/Views/Login"));
 const Register = lazy(() => import("src/Views/Register"));
@@ -19,21 +21,34 @@ const Router = () => {
     <BrowserRouter>
       <Suspense fallback={<PreLoader />}>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/recover-password" element={<RecoverPassword />} />
-          {/* <Route path="/" element={<PrivateRoute />}> */}
-          <Route path="/" element={<Main />}>
-            <Route path="/home" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-
-            <Route path="/users" element={<Users />} />
-            <Route path="/users/create" element={<UsersCreate />} />
-            <Route path="/users/edit/:id" element={<UsersEdit />} />
+          <Route path="/login" element={<PublicRoute />}>
+            <Route path="/login" element={<Login />} />
           </Route>
-          {/* </Route> */}
-          <Route path="*" element={<Error404 />} />
+
+          <Route path="/register" element={<PublicRoute />}>
+            <Route path="/register" element={<Register />} />
+          </Route>
+
+          <Route path="/forgot-password" element={<PublicRoute />}>
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+          </Route>
+
+          <Route path="/recover-password" element={<PublicRoute />}>
+            <Route path="/recover-password" element={<RecoverPassword />} />
+          </Route>
+
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/" element={<Main />}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/users/create" element={<UsersCreate />} />
+              <Route path="/users/edit/:id" element={<UsersEdit />} />
+
+              <Route path="*" element={<Error404 />} />
+            </Route>
+          </Route>
         </Routes>
       </Suspense>
     </BrowserRouter>

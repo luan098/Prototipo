@@ -3,9 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import * as Yup from "yup";
-
 import { Form, InputGroup } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { loginUser } from "src/store/reducers/auth";
@@ -17,52 +15,20 @@ import AuthService from "src/Services/AuthService";
 
 const Login = () => {
   const [isAuthLoading, setAuthLoading] = useState(false);
-  const [isGoogleAuthLoading, setGoogleAuthLoading] = useState(false);
-  const [isFacebookAuthLoading, setFacebookAuthLoading] = useState(false);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
     try {
       setAuthLoading(true);
-      const token = await AuthService.loginByAuth(email, password);
-      if (!token) throw new Error("User does not exist!");
+      const access_token = await AuthService.loginByAuth(email, password);
 
       toast.success("Login is succeed!");
       setAuthLoading(false);
-      dispatch(loginUser(token));
+      dispatch(loginUser(access_token));
       navigate("/");
     } catch (error: any) {
       setAuthLoading(false);
-      toast.error(error.message || "Failed");
-    }
-  };
-
-  const loginByGoogle = async () => {
-    try {
-      setGoogleAuthLoading(true);
-      // const token = await AuthService.loginByGoogle();
-      toast.success("Disabled!");
-      setGoogleAuthLoading(false);
-      // dispatch(loginUser(token));
-      // navigate("/");
-    } catch (error: any) {
-      setGoogleAuthLoading(false);
-      toast.error(error.message || "Failed");
-    }
-  };
-
-  const loginByFacebook = async () => {
-    try {
-      setFacebookAuthLoading(true);
-      // const token = await AuthService.loginByFacebook();
-      toast.success("Disabled!");
-      setFacebookAuthLoading(false);
-      // dispatch(loginUser(token));
-      // navigate("/");
-    } catch (error: any) {
-      setFacebookAuthLoading(false);
       toast.error(error.message || "Failed");
     }
   };
@@ -148,7 +114,6 @@ const Login = () => {
                 )}
               </InputGroup>
             </div>
-
             <div className="row">
               <div className="col-8">
                 <Checkbox type="icheck" checked={false}>
@@ -156,38 +121,12 @@ const Login = () => {
                 </Checkbox>
               </div>
               <div className="col-4">
-                <Button
-                  block
-                  type="submit"
-                  isLoading={isAuthLoading}
-                  disabled={isFacebookAuthLoading || isGoogleAuthLoading}
-                >
+                <Button block type="submit" isLoading={isAuthLoading}>
                   Sign In
                 </Button>
               </div>
             </div>
           </form>
-          <div className="social-auth-links text-center mt-2 mb-3">
-            <Button
-              block
-              icon="facebook"
-              onClick={loginByFacebook}
-              isLoading={isFacebookAuthLoading}
-              disabled={isAuthLoading || isGoogleAuthLoading}
-            >
-              Sign up using Facebook
-            </Button>
-            <Button
-              block
-              icon="google"
-              theme="danger"
-              onClick={loginByGoogle}
-              isLoading={isGoogleAuthLoading}
-              disabled={isAuthLoading || isFacebookAuthLoading}
-            >
-              Sign up using Google
-            </Button>
-          </div>
           <p className="mb-1">
             <Link to="/forgot-password">I forgot my password</Link>
           </p>
