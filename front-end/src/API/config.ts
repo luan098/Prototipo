@@ -10,7 +10,7 @@ interface Api {
 }
 
 const axiosParams = {
-  baseURL: "//127.0.0.1:3001/",
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
