@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { ProjectStorage } from "src/Hooks/useLocalStorage";
 import { logoutUser } from "src/store/reducers/auth";
 import store from "src/store/store";
 
