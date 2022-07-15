@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, logoutUser } from "src/store/reducers/auth";
@@ -27,17 +27,7 @@ const Main = () => {
   const fetchProfile = async () => {
     try {
       // const response = await Gatekeeper.getProfile();
-      // dispatch(loadUser(response));
-      dispatch(
-        loadUser({
-          isLoggedIn: true,
-          token: "falsetoken",
-          currentUser: {
-            email: "mail@example.com",
-            picture: null,
-          },
-        })
-      );
+      dispatch(loadUser({}));
       await sleep(1000);
       setIsAppLoaded(true);
     } catch (error) {
@@ -99,7 +89,9 @@ const Main = () => {
     return (
       <>
         <Header />
+
         <MenuSidebar />
+
         <div className="content-wrapper">
           <div className="pt-3" />
           <section className="content">

@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -9,11 +10,21 @@ export class User {
   name: string;
 
   @Index()
-  @Column({ length: 100, unique: true })
+  @Column({ unique: true })
   email: string;
 
-  @Column({ length: 45 })
+  @Exclude()
+  @Column()
   password: string;
+
+  @Column({ nullable: true })
+  photo: string;
+
+  @Column({ length: 20, nullable: true })
+  phone: string;
+
+  @Column({ length: 20, nullable: true })
+  cellphone: string;
 
   @Column({ nullable: true, default: true })
   isActive: boolean;

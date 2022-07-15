@@ -15,7 +15,7 @@ class AuthService {
       ...this.body,
     });
 
-    return data?.access_token || "";
+    return data || "";
   }
 }
 

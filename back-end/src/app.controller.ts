@@ -23,8 +23,8 @@ export class AppController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('autentication')
-  autenticationCheck() {
+  @Get('authentication')
+  authenticationCheck() {
     return true;
   }
 }
