@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, logoutUser } from "src/store/reducers/auth";
 import { toggleSidebarMenu } from "src/store/reducers/ui";
@@ -8,8 +8,10 @@ import ControlSidebar from "src/modules/main/control-sidebar/ControlSidebar";
 import Header from "src/modules/main/header/Header";
 import MenuSidebar from "src/modules/main/menu-sidebar/MenuSidebar";
 import Footer from "src/modules/main/footer/Footer";
+import UserService from "src/Services/UserService";
 
 const Main = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const menuSidebarCollapsed = useSelector(
     (state: any) => state.ui.menuSidebarCollapsed
@@ -26,12 +28,13 @@ const Main = () => {
 
   const fetchProfile = async () => {
     try {
-      // const response = await Gatekeeper.getProfile();
-      dispatch(loadUser({}));
+      const response = await UserService.getProfile();
+      dispatch(loadUser(response));
       await sleep(1000);
       setIsAppLoaded(true);
     } catch (error) {
       dispatch(logoutUser());
+      navigate("/login");
       await sleep(1000);
       setIsAppLoaded(true);
     }

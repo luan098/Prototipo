@@ -25,6 +25,14 @@ class UserService {
     }
   }
 
+  async getProfile() {
+    const { data } = await api.axios.get("profile", {
+      ...this.body,
+    });
+
+    return data;
+  }
+
   async listUser() {
     try {
       const { data } = await api.axios.get("users", this.body);
