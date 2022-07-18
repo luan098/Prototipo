@@ -20,6 +20,7 @@ const FormUser: FC<{ user?: FormData }> = ({ user }) => {
   const registerUser = async (values: FormData) => {
     try {
       const result = await UserService.createUser(values);
+      toast.success("Registration is success");
       navigate(`/users/edit/${result}`);
     } catch (error) {
       toast.error("An error ocurred on procedure");
@@ -31,6 +32,9 @@ const FormUser: FC<{ user?: FormData }> = ({ user }) => {
       const updateV = { ...values };
 
       const result = await UserService.updateUser(id || "", updateV);
+      if (!result) throw new Error("Update error");
+
+      toast.success("Update procedure success");
       navigate(`/users/edit/${id}`);
     } catch (error) {
       toast.error("An error ocurred on procedure");
