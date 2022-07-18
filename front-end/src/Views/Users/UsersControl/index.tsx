@@ -20,7 +20,7 @@ const UsersControl = () => {
       result.password = "";
       setUser(result);
     } catch (error) {
-      toast.success("An error ocurred on procedure");
+      toast.error("An error ocurred on procedure");
     }
   };
 

@@ -31,7 +31,7 @@ const FormUser: FC<{ user?: FormData }> = ({ user }) => {
       const updateV = { ...values };
 
       const result = await UserService.updateUser(id || "", updateV);
-      navigate(`/users/edit/${result}`);
+      navigate(`/users/edit/${id}`);
     } catch (error) {
       toast.error("An error ocurred on procedure");
     }

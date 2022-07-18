@@ -74,7 +74,7 @@ const Users = () => {
                   rowSpan={1}
                   colSpan={1}
                 >
-                  First Name
+                  Name
                 </th>
                 <th
                   className="sorting sorting_asc"
@@ -83,7 +83,7 @@ const Users = () => {
                   rowSpan={1}
                   colSpan={1}
                 >
-                  Last Name
+                  Cellphone
                 </th>
                 <th
                   className="sorting sorting_asc"
@@ -114,8 +114,8 @@ const Users = () => {
                     className={oddEven}
                   >
                     <td>{v.id}</td>
-                    <td>{v.firstName}</td>
-                    <td>{v.lastName}</td>
+                    <td>{v.name}</td>
+                    <td>{v.cellphone}</td>
                     <td>{v.email}</td>
                     <td>
                       <Button
