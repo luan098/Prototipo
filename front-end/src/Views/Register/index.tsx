@@ -7,25 +7,25 @@ import * as Yup from "yup";
 import { loginUser } from "src/store/reducers/auth";
 import Checkbox from "src/Components/checkbox/Checkbox";
 import Button from "src/Components/button/Button";
-import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faIdCard,
+  faLock,
+} from "@fortawesome/free-solid-svg-icons";
 import { setWindowClass } from "src/Utils/helpers";
 import { Form, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import * as AuthService from "src/Services/Auth";
+import UserService from "src/Services/UserService";
 
 const Register = () => {
   const [isAuthLoading, setAuthLoading] = useState(false);
-  const [isGoogleAuthLoading, setGoogleAuthLoading] = useState(false);
-  const [isFacebookAuthLoading, setFacebookAuthLoading] = useState(false);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
-  const register = async (email: string, password: string) => {
+  const register = async (name: string, email: string, password: string) => {
     try {
       setAuthLoading(true);
-      const token = await AuthService.registerByAuth(email, password);
+      const token = await UserService.createUser({ name, email, password });
       setAuthLoading(false);
       dispatch(loginUser(token));
       toast.success("Registration is success");
@@ -36,42 +36,15 @@ const Register = () => {
     }
   };
 
-  const registerByGoogle = async () => {
-    try {
-      setGoogleAuthLoading(true);
-      const token = await AuthService.registerByGoogle();
-      setGoogleAuthLoading(false);
-      dispatch(loginUser(token));
-      toast.success("Authentication is succeed!");
-      navigate("/");
-    } catch (error: any) {
-      toast.error(error.message || "Failed");
-      setGoogleAuthLoading(false);
-    }
-  };
-
-  const registerByFacebook = async () => {
-    try {
-      setFacebookAuthLoading(true);
-
-      const token = await AuthService.registerByFacebook();
-      setFacebookAuthLoading(false);
-      dispatch(loginUser(token));
-      toast.success("Register is succeeded!");
-      navigate("/");
-    } catch (error: any) {
-      setFacebookAuthLoading(false);
-      toast.error(error.message || "Failed");
-    }
-  };
-
   const { handleChange, values, handleSubmit, touched, errors } = useFormik({
     initialValues: {
+      name: "",
       email: "",
       password: "",
       passwordRetype: "",
     },
     validationSchema: Yup.object({
+      name: Yup.string().min(5, "Must be 5 characters or more"),
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
         .min(5, "Must be 5 characters or more")
@@ -90,7 +63,7 @@ const Register = () => {
         }),
     }),
     onSubmit: (values) => {
-      register(values.email, values.password);
+      register(values.name, values.email, values.password);
     },
   });
 
@@ -108,6 +81,31 @@ const Register = () => {
         <div className="card-body">
           <p className="login-box-msg">Register a new membership</p>
           <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <InputGroup className="mb-3">
+                <Form.Control
+                  id="name"
+                  name="name"
+                  type="string"
+                  placeholder="Name"
+                  onChange={handleChange}
+                  value={values.name}
+                  isValid={touched.name && !errors.name}
+                  isInvalid={touched.name && !!errors.name}
+                />
+                {touched.name && errors.name ? (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.name}
+                  </Form.Control.Feedback>
+                ) : (
+                  <InputGroup.Append>
+                    <InputGroup.Text>
+                      <FontAwesomeIcon icon={faIdCard} />
+                    </InputGroup.Text>
+                  </InputGroup.Append>
+                )}
+              </InputGroup>
+            </div>
             <div className="mb-3">
               <InputGroup className="mb-3">
                 <Form.Control
@@ -194,38 +192,12 @@ const Register = () => {
                 </Checkbox>
               </div>
               <div className="col-5">
-                <Button
-                  type="submit"
-                  block
-                  isLoading={isAuthLoading}
-                  disabled={isFacebookAuthLoading || isGoogleAuthLoading}
-                >
+                <Button type="submit" block isLoading={isAuthLoading}>
                   Register
                 </Button>
               </div>
             </div>
           </form>
-          <div className="social-auth-links text-center">
-            <Button
-              block
-              icon="facebook"
-              onClick={registerByFacebook}
-              isLoading={isFacebookAuthLoading}
-              disabled={isAuthLoading || isGoogleAuthLoading}
-            >
-              Sign up using Facebook
-            </Button>
-            <Button
-              block
-              icon="google"
-              theme="danger"
-              onClick={registerByGoogle}
-              isLoading={isGoogleAuthLoading}
-              disabled={isAuthLoading || isFacebookAuthLoading}
-            >
-              Sign up using Google
-            </Button>
-          </div>
           <Link to="/login" className="text-center">
             I already have a membership
           </Link>
