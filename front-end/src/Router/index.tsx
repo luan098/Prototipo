@@ -12,7 +12,7 @@ const RecoverPassword = lazy(() => import("src/Views/RecoverPassword"));
 const Error404 = lazy(() => import("src/Views/Error404"));
 const Home = lazy(() => import("src/Views/Home"));
 const Users = lazy(() => import("src/Views/Users/"));
-const UsersCreate = lazy(() => import("src/Views/Users/create"));
+const UsersCreate = lazy(() => import("src/Views/Users/UsersControl"));
 const Profile = lazy(() => import("src/Views/Profile"));
 
 const Router = () => {

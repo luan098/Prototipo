@@ -10,6 +10,7 @@ import MenuSidebar from "src/modules/main/menu-sidebar/MenuSidebar";
 import Footer from "src/modules/main/footer/Footer";
 import UserService from "src/Services/UserService";
 import PreLoader from "src/Components/pre-loader";
+import { toast } from "react-toastify";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -30,10 +31,13 @@ const Main = () => {
   const fetchProfile = async () => {
     try {
       const response = await UserService.getProfile();
+      if (!response) throw new Error("User not find");
+
       dispatch(loadUser(response));
       await sleep(1000);
       setIsAppLoaded(true);
     } catch (error) {
+      toast("User no find");
       dispatch(logoutUser());
       navigate("/login");
       await sleep(1000);

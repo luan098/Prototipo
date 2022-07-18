@@ -28,7 +28,7 @@ const UsersControl = () => {
     if (id) {
       getUser(id);
     }
-  }, []);
+  }, [id]);
 
   return (
     <div className="container-fluid">
@@ -38,9 +38,6 @@ const UsersControl = () => {
             <div className="col-sm-6">
               <h1>Users</h1>
             </div>
-            <div className="col-sm-6">
-              <Button className="float-sm-right">Register</Button>
-            </div>
           </div>
         </div>
       </section>
@@ -48,7 +45,7 @@ const UsersControl = () => {
         <div className="col-sm-12">
           <div className="card card-primary">
             <div className="card-header">
-              <h3 className="card-title">Create User</h3>
+              <h3 className="card-title">{id ? "Edit User" : "Create User"}</h3>
             </div>
             {id && !user?.email ? "" : <FormUser user={user} />}
           </div>

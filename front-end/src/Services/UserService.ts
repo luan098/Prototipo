@@ -8,16 +8,12 @@ class UserService {
   }
 
   async createUser(userData: any) {
-    try {
-      const { data } = await api.axios.post("users", {
-        ...this.body,
-        ...userData,
-      });
+    const { data } = await api.axios.post("users", {
+      ...this.body,
+      ...userData,
+    });
 
-      return data;
-    } catch (error) {
-      return null;
-    }
+    return data;
   }
 
   async updateUser(id: string, userData: any) {
@@ -48,23 +44,15 @@ class UserService {
   }
 
   async listUser() {
-    try {
-      const { data } = await api.axios.get("users", this.body);
+    const { data } = await api.axios.get("users", this.body);
 
-      return data;
-    } catch (error) {
-      return null;
-    }
+    return data;
   }
 
   async delete(id: string) {
-    try {
-      const { data } = await api.axios.delete(`users/${id}`, this.body);
+    const { data } = await api.axios.delete(`users/${id}`, this.body);
 
-      return data;
-    } catch (error) {
-      return null;
-    }
+    return data;
   }
 }
 
