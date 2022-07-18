@@ -1,6 +1,35 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Button } from "src/Components";
+import UserService from "src/Services/UserService";
+import FormUser from "./FormUser";
 
-const Users = () => {
+const UsersControl = () => {
+  const { id } = useParams();
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cellphone: "",
+  });
+
+  const getUser = async (userId: string) => {
+    try {
+      const result = await UserService.getUserById(userId);
+      result.password = "";
+      setUser(result);
+    } catch (error) {
+      toast.success("An error ocurred on procedure");
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getUser(id);
+    }
+  }, []);
+
   return (
     <div className="container-fluid">
       <section className="content-header">
@@ -21,53 +50,7 @@ const Users = () => {
             <div className="card-header">
               <h3 className="card-title">Create User</h3>
             </div>
-
-            <form>
-              <div className="card-body">
-                <div className="form-group col-sm-6">
-                  <label htmlFor="firstName">First Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="firstName"
-                    placeholder="John"
-                  />
-                </div>
-                <div className="form-group col-sm-6">
-                  <label htmlFor="lastName">Last Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="lastName"
-                    placeholder="Doe"
-                  />
-                </div>
-                <div className="form-group col-sm-6">
-                  <label htmlFor="email">Email address</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="Enter email"
-                  />
-                </div>
-                <div className="form-group col-sm-6">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Password"
-                  />
-                </div>
-              </div>
-
-              <div className="card-footer">
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
-              </div>
-            </form>
+            {id && !user?.email ? "" : <FormUser user={user} />}
           </div>
         </div>
       </div>
@@ -75,4 +58,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default UsersControl;

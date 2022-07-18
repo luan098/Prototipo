@@ -13,7 +13,6 @@ const Error404 = lazy(() => import("src/Views/Error404"));
 const Home = lazy(() => import("src/Views/Home"));
 const Users = lazy(() => import("src/Views/Users/"));
 const UsersCreate = lazy(() => import("src/Views/Users/create"));
-const UsersEdit = lazy(() => import("src/Views/Users/edit"));
 const Profile = lazy(() => import("src/Views/Profile"));
 
 const Router = () => {
@@ -46,7 +45,7 @@ const Router = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/users" element={<Users />} />
               <Route path="/users/create" element={<UsersCreate />} />
-              <Route path="/users/edit/:id" element={<UsersEdit />} />
+              <Route path="/users/edit/:id" element={<UsersCreate />} />
             </Route>
           </Route>
         </Routes>

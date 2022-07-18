@@ -9,6 +9,7 @@ import Header from "src/modules/main/header/Header";
 import MenuSidebar from "src/modules/main/menu-sidebar/MenuSidebar";
 import Footer from "src/modules/main/footer/Footer";
 import UserService from "src/Services/UserService";
+import PreLoader from "src/Components/pre-loader";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -77,17 +78,7 @@ const Main = () => {
 
   const getAppTemplate = useCallback(() => {
     if (!isAppLoaded) {
-      return (
-        <div className="preloader flex-column justify-content-center align-items-center">
-          <img
-            className="animation__shake"
-            src="/img/logo.png"
-            alt="AdminLTELogo"
-            height="60"
-            width="60"
-          />
-        </div>
-      );
+      return <PreLoader />;
     }
     return (
       <>

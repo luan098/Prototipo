@@ -7,12 +7,7 @@ class UserService {
     this.body = { ...api.body };
   }
 
-  async createUser(userData: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-  }) {
+  async createUser(userData: any) {
     try {
       const { data } = await api.axios.post("users", {
         ...this.body,
@@ -23,6 +18,25 @@ class UserService {
     } catch (error) {
       return null;
     }
+  }
+
+  async updateUser(id: string, userData: any) {
+    if (userData && userData.password === "") delete userData.password;
+
+    const { data } = await api.axios.patch(`users/${id}`, {
+      ...this.body,
+      ...userData,
+    });
+
+    return data;
+  }
+
+  async getUserById(id: string) {
+    const { data } = await api.axios.get(`users/${id}`, {
+      ...this.body,
+    });
+
+    return data;
   }
 
   async getProfile() {

@@ -120,7 +120,7 @@ const Users = () => {
                     <td>
                       <Button
                         onClick={() => {
-                          navigate(`/users/edit/${1}`);
+                          navigate(`/users/edit/${v.id}`);
                         }}
                       >
                         Edit
@@ -130,8 +130,8 @@ const Users = () => {
                           const result = await UserService.delete(v.id);
                           toast(
                             result
-                              ? "Registro apagado com sucesso."
-                              : "Erro ao tentar excluir registro."
+                              ? "Data erased."
+                              : "An error ocurred in process."
                           );
 
                           findUsers();

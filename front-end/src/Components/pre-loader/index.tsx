@@ -3,16 +3,14 @@ import "./index.css";
 
 const PreLoader = () => {
   return (
-    <div className="pre-loader">
-      <img src={spinner} className="pre-loader__spinner" alt="logo" />
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
+    <div className="preloader flex-column justify-content-center align-items-center">
+      <img
+        className="animation__shake"
+        src="/img/logo.png"
+        alt="AdminLTELogo"
+        height="60"
+        width="60"
+      />
     </div>
   );
 };
