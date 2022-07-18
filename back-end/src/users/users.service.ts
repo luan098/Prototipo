@@ -16,9 +16,11 @@ export class UsersService {
 
   async insert(createUserDto: CreateUserDto): Promise<User | null> {
     const finalUser = { ...createUserDto };
-    finalUser.password = await hash(finalUser.password, 10);
+    const password = await hash(finalUser.password, 10);
 
     const entity = plainToInstance(User, finalUser);
+
+    entity.password = password;
     return this.usersRepository.save(entity);
   }
 
