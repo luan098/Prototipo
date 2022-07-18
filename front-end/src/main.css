@@ -11,6 +11,7 @@
 
 #root {
   box-sizing: border-box;
+  height: 100vh;
 }
 
 .main-header .navbar-nav .nav-item .nav-link {

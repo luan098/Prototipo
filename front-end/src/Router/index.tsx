@@ -40,8 +40,8 @@ const Router = () => {
 
           <Route path="/" element={<PrivateRoute />}>
             <Route path="/" element={<Main />}>
-              <Route path="/home" element={<Home />} />
               <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/users" element={<Users />} />
               <Route path="/users/create" element={<UsersCreate />} />
