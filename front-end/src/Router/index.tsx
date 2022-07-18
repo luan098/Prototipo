@@ -36,8 +36,6 @@ const Router = () => {
             <Route path="/recover-password" element={<RecoverPassword />} />
           </Route>
 
-          <Route path="/error-404" element={<Error404 />} />
-
           <Route path="/" element={<PrivateRoute />}>
             <Route path="/" element={<Main />}>
               <Route path="/" element={<Home />} />
@@ -48,6 +46,8 @@ const Router = () => {
               <Route path="/users/edit/:id" element={<UsersCreate />} />
             </Route>
           </Route>
+
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
